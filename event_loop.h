@@ -176,7 +176,7 @@ public:
                 delete data;
             }
             // schedule normal task
-            if (!task_queue_.empty()) {
+            while (!task_queue_.empty()) {
                 std::unique_ptr<task_t> task(task_queue_.front());
                 task_queue_.pop_front();
                 task->run();
