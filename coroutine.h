@@ -4,8 +4,11 @@
 #include <functional>
 #include <stdint.h>
 
+#include <future.h>
+
 namespace cops {
 class coro_t;
+class event_loop_t;
 }
 
 using context = void*;
@@ -47,12 +50,14 @@ public:
 
   void switch_out();
   void switch_in();
+  void detach(std::unique_ptr<coro_t>& self, event_loop_t* loop);
 
 public:
   context ctx_;
   coro_t* next_;
   stack_t stack_;
   Fn fn_;
+  future_t<int> fut_;
 };
 
 extern coro_t* current;

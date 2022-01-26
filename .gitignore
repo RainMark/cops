@@ -1,7 +1,7 @@
 # Prerequisites
 *.d
 
-cops
+bin/
 
 # Compiled Object files
 *.slo
