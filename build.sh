@@ -11,3 +11,4 @@ $CXX $FLAGS future_test.cpp -o bin/future_test
 
 $CXX $FLAGS -O0 loop_test.cpp coroutine.cpp *.S -o bin/loop_test
 
+$CXX $FLAGS -O0 httpd/httpd.cpp coroutine.cpp *.S -o bin/httpd

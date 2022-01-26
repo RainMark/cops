@@ -224,4 +224,18 @@ private:
     std::deque<task_t*> task_queue_;
 };
 
+
+inline event_loop_t* get_event_loop() {
+    static event_loop_t loop;
+    return &loop;
+}
+
+inline ssize_t recv(int sockfd, void* buf, size_t len, int flags) {
+    return get_event_loop()->sock_recv(sockfd, buf, len, flags);
+}
+
+inline ssize_t send(int sockfd, void* buf, size_t len, int flags) {
+    return get_event_loop()->sock_send(sockfd, buf, len, flags);
+}
+
 } // cops
