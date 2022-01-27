@@ -15,6 +15,9 @@ void main(coro_t* coro, context from) {
 
 void coro_t::switch_out() {
   current = next_;
+#ifdef SPLIT_STACK
+  switch_split_stack_context(stack_.ss_ctx_, stack_.next_);
+#endif
   context from = switch_context(next_, next_->ctx_);
   next_ = static_cast<coro_t*>(from);
   next_->ctx_ = from;
@@ -23,6 +26,9 @@ void coro_t::switch_out() {
 void coro_t::switch_in() {
   next_ = current;
   current = this;
+#ifdef SPLIT_STACK
+  switch_split_stack_context(stack_.next_, stack_.ss_ctx_);
+#endif
   ctx_ = switch_context(this, ctx_);
 }
 

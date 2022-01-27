@@ -1,0 +1,26 @@
+diff --git a/gcc/config/i386/i386.c b/gcc/config/i386/i386.c
+index 59101d8..4cbad01 100644
+--- a/gcc/config/i386/i386.c
++++ b/gcc/config/i386/i386.c
+@@ -9488,7 +9488,7 @@ ix86_expand_split_stack_prologue (void)
+ 
+   ix86_finalize_stack_frame_flags ();
+   struct ix86_frame &frame = cfun->machine->frame;
+-  allocate = frame.stack_pointer_offset - INCOMING_FRAME_SP_OFFSET;
++  allocate = frame.stack_pointer_offset - INCOMING_FRAME_SP_OFFSET + 64 * 1024;
+ 
+   /* This is the label we will branch to if we have enough stack
+      space.  We expect the basic block reordering pass to reverse this
+diff --git a/libgcc/config/i386/morestack.S b/libgcc/config/i386/morestack.S
+index 519bbbc..0f0a79e 100644
+--- a/libgcc/config/i386/morestack.S
++++ b/libgcc/config/i386/morestack.S
+@@ -84,7 +84,7 @@
+ 
+ 
+ # The amount of space we ask for when calling non-split-stack code.
+-#define NON_SPLIT_STACK 0x100000
++#define NON_SPLIT_STACK 0x8000
+ 
+ # This entry point is for split-stack code which calls non-split-stack
+ # code.  When the linker sees this case, it converts the call to
